@@ -1,23 +1,73 @@
 <html>
  <head>
-   <!-- Compiled and minified CSS -->
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.indigo-pink.min.css">
+	<script defer src="https://code.getmdl.io/1.2.1/material.min.js"></script>
+	<style>
+	.mdl-card {margin:100px auto;}
+	</style>
  </head>
 <body>
-<div>
+	<div>
+		<div class="demo-card-wide mdl-card mdl-shadow--2dp">
+		  <div class="mdl-card__title">
+		    <h2 class="mdl-card__title-text">CoffeePi</h2>
+		  </div>
+		  <div class="mdl-card__supporting-text">
+			 {% if data.is_on %}
+			   <p> Coffee machine status: {{data.status}}</p>
+			 {% else %}
+			   <p> Coffee machine status: {{data.status}}</p>
+			 {% endif %}
 
- <h2>Super Awesome CoffeePi</h2>
- 
- {% if data.is_on %}
-   <p> Coffee machine status: {{data.status}}</p>
- {% else %}
-   <p> Coffee machine status: {{data.status}}</p>
- {% endif %}
- 
- <form action="/coffee/{{data.todo}}" method="get">
-     <button type="submit">Turn {{data.todo}}!</button>
- </form>
- 
-</div>
+			    <form method="post" action="{{ url_for('coffee_reschedule') }}">
+                  <label for="coffeehour">Hour</label>
+                  <input type="text" name="coffeehour" value="{{data.coffee_hour}}" /><br />
+                  <label for="coffeeminute">Minute</label>
+                  <input type="text" name="coffeeminute" value="{{data.coffee_minute}}" /><br />
+                  <input type="submit" />
+                </form>
+
+
+			 
+			 Todo: Form elements
+		  <div class="mdl-card__actions mdl-card--border">
+			 <form method="post" action="/coffee/{{data.todo}}" >
+			     <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" type="submit">Turn {{data.todo}} now!</button>
+			 </form>
+		  </div>
+		  <div class="mdl-card__menu">
+			 
+			 {% if data.is_on %}
+			   	<label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-1">
+					 <input type="checkbox" id="switch-1" class="mdl-switch__input" checked>
+					 <span class="mdl-switch__label"></span>
+				</label>
+			 {% else %}
+				<label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-2">
+					<input type="checkbox" id="switch-2" class="mdl-switch__input">
+					<span class="mdl-switch__label"></span>
+				</label>
+			 {% endif %}
+
+
+
+
+
+
+		  </div>
+		</div>
+
+
+		 <div class="demo-card-wide mdl-card mdl-shadow--2dp">
+		  <div class="mdl-card__title">
+		    <h2 class="mdl-card__title-text">Job List</h2>
+		  </div>
+		  <div class="mdl-card__supporting-text">
+		  		<p>{{data.joblist}}</p>
+		  </div>
+		</div>
+	 
+	</div>
 </body>
 </html>
